@@ -24,7 +24,21 @@ function valid_name_middleware(req, res, next) {
 // app.all('*',valid_name_middleware)
 
 app.get('/list', async (req, res) => {
-    const list = await models.Users.findall({})
+    const {Op} = require("sequelize");
+    const list = await models.Users.findAll({
+        where: { [Op.and]: [{id: {[Op.between]: [3, 6] }},{id:{[Op.ne]:4}}]}
+    })
+    //const list2 = await models.Users.findAll()
+    // res.json({
+    //     list,
+    //     list2
+    // })).then(
+    // let list2
+    // models.Users.findAll().then((data) => {
+    //     list2 = data
+    //     console.log(list2)
+
+    // })
     res.json({
         list
     })
